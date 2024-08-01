@@ -1,4 +1,4 @@
-const Exam=require("../models/ExamModel")
+const Exam=require("../models/examModel")
 
 const createExam= async(data)=>{
     try{
