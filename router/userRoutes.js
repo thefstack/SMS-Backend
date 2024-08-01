@@ -36,7 +36,7 @@ router.post("/login",async(req,res)=>{
         user.token=token;
         await user.save();
 
-        res.cookie('token',token,{httpOnly:true, secure:true, maxAge:60*60*1000, sameSite:'Lax'});
+        res.cookie('token',token,{httpOnly:true, secure:true, maxAge:60*60*1000, sameSite:'None'});
         res.status(200).json({success:"Login Success",username:user.username});
 
     }catch(error){
@@ -60,7 +60,7 @@ router.post("/logout",authenticateToken, async(req,res)=>{
 
 
 
-router.post("/", authenticateToken, async(req,res)=>{
+router.post("/", authenticateToken, authorizeAdmin, async(req,res)=>{
     try{
         const result=await userModel.createUser(req.body);
         res.status(200).json(result)
@@ -95,7 +95,7 @@ router.get("/:username", authenticateToken, async(req,res)=>{
     }
 })
 
-router.put("/:username", authenticateToken, async(req,res)=>{
+router.put("/:username", authenticateToken, authorizeAdmin, async(req,res)=>{
     try{
         const result=await userModel.updateUser(req.params.username,req.body);
         res.status(200).json(result)
@@ -105,7 +105,7 @@ router.put("/:username", authenticateToken, async(req,res)=>{
     }
 })
 
-router.delete("/:username", authenticateToken, async(req,res)=>{
+router.delete("/:username", authenticateToken, authorizeAdmin, async(req,res)=>{
     try{
         const result=await userModel.deleteUser(req.params.username);
         res.status(200).json(result);

@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User=require("../models/userModel")
+const cookieParser = require('cookie-parser');
 
 const authenticateToken = (req, res, next) => {
     const token=req.cookies.token;
@@ -17,7 +18,6 @@ const authenticateToken = (req, res, next) => {
             }
     
                 req.user = user;
-                console.log("AuthToken Complete")
                 next();
 
             } catch (error) {

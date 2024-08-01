@@ -7,7 +7,7 @@ const {authenticateToken,authorizeAdmin}=require("../middleware/authToken")
 
 router.use("/attendance",teacherAttendance);
 
-router.post("/", authenticateToken, async(req,res)=>{
+router.post("/", authenticateToken, authorizeAdmin, async(req,res)=>{
     try{
         const teacherId=await teacherFunction.createTeacher(req.body);
         res.status(200).json(teacherId)
@@ -35,7 +35,7 @@ router.get("/:id", authenticateToken, async(req,res)=>{
     }
 })
 
-router.put("/:id", authenticateToken, async(req,res)=>{
+router.put("/:id", authenticateToken, authorizeAdmin, async(req,res)=>{
     try{
         const teacher=await teacherFunction.updateTeacher(req.params.id,req.body);
 
@@ -46,7 +46,7 @@ router.put("/:id", authenticateToken, async(req,res)=>{
     }
 })
 
-router.delete("/:id", authenticateToken, async(req,res)=>{
+router.delete("/:id", authenticateToken, authorizeAdmin, async(req,res)=>{
     try{
         const teacher=await teacherFunction.deleteTeacher(req.params.id);
         res.status(200).json(teacher);

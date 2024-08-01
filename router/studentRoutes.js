@@ -7,7 +7,7 @@ const student_attendance=require("./student_attendanceRoute");
 const {authenticateToken, authorizeAdmin}=require("../middleware/authToken")
 router.use("/attendance",student_attendance)
 
-router.post('/', authenticateToken, async (req, res) => {
+router.post('/', authenticateToken, authorizeAdmin, async (req, res) => {
   try {
     const studentId = await studentFunction.createStudent(req.body);
     res.status(200).json({ id: studentId });
@@ -41,7 +41,7 @@ router.get('/:id', authenticateToken, async (req, res) => {
   }
 });
 
-router.put('/:id', authenticateToken, async (req, res) => {
+router.put('/:id', authenticateToken, authorizeAdmin, async (req, res) => {
     const studentId = req.params.id;
     const updateData = req.body;
     try {
@@ -52,7 +52,7 @@ router.put('/:id', authenticateToken, async (req, res) => {
     }
 });
 
-router.delete('/:id', authenticateToken, async (req, res) => {
+router.delete('/:id', authenticateToken, authorizeAdmin, async (req, res) => {
   try {
     const affectedRows = await studentFunction.deleteStudent(req.params.id);
     if (affectedRows.acknowledged === true) {
@@ -67,7 +67,7 @@ router.delete('/:id', authenticateToken, async (req, res) => {
 
 
 
-router.post('/class/studentbyclass', authenticateToken, async(req,res)=>{
+router.post('/class/studentbyclass', authorizeAdmin, authenticateToken, async(req,res)=>{
   try{
     const student= await studentFunction.createStudentByClass(req.body);
     if(!student){

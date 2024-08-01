@@ -3,7 +3,7 @@ const router=express.Router();
 const subjectModel=require("../functions/subjectFunction")
 const {authenticateToken,authorizeAdmin}=require("../middleware/authToken")
 
-router.post("/", authenticateToken, async(req,res)=>{
+router.post("/", authenticateToken, authorizeAdmin, async(req,res)=>{
     try{
         const subject=await subjectModel.createSubject(req.body);
         res.status(200).json(subject);
@@ -12,7 +12,7 @@ router.post("/", authenticateToken, async(req,res)=>{
     }
 })
 
-router.get("/", authenticateToken, async(req,res)=>{
+router.get("/", authenticateToken, authorizeAdmin, async(req,res)=>{
     try{
         const subject=await subjectModel.getSubject();
         res.status(200).json(subject);
@@ -30,7 +30,7 @@ router.get("/:id", authenticateToken, async(req,res)=>{
     }
 })
 
-router.put("/:id", authenticateToken, async(req,res)=>{
+router.put("/:id", authenticateToken, authorizeAdmin, async(req,res)=>{
     try{
         const subject=await subjectModel.updateSubject(req.params.id, req.body);
         res.status(200).json(subject);
@@ -39,7 +39,7 @@ router.put("/:id", authenticateToken, async(req,res)=>{
     }
 })
 
-router.delete("/:id", authenticateToken, async(req,res)=>{
+router.delete("/:id", authenticateToken, authorizeAdmin, async(req,res)=>{
     try{
         const subject=await subjectModel.deleteSubject(req.params.id);
         res.status(200).json(subject);
