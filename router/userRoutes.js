@@ -35,7 +35,7 @@ router.post("/login",async(req,res)=>{
         user.token=token;
         await user.save();
 
-        res.cookie('token',token,{httpOnly:true, secure:true, maxAge:60*60*1000, sameSite:'Lax'});
+        res.cookie('token',token,{httpOnly:true, secure:true, maxAge:60*60*1000, sameSite:'None'});
         res.status(200).json({success:"Login Success",username:user.username});
 
     }catch(error){
