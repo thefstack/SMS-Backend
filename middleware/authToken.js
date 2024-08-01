@@ -3,7 +3,6 @@ const User=require("../models/userModel")
 
 const authenticateToken = async(req, res, next) => {
     const token=await req.cookies.token;
-    console.log(token)
     if (!token) return res.status(401).json({ error: 401 });
 
     await jwt.verify(token, process.env.SECRET_KEY, async(err, user) => {
