@@ -32,7 +32,6 @@ router.post("/login",async(req,res)=>{
             role:user.role
         }
         const token=jwt.sign(payload ,process.env.SECRET_KEY,{expiresIn:'120m'});
-
         user.token=token;
         await user.save();
 
@@ -50,7 +49,7 @@ router.post("/logout",authenticateToken, async(req,res)=>{
         res.clearCookie('token', {
             httpOnly: true,
             secure: true,
-            sameSite: 'Lax',
+            sameSite: 'None',
         });
         res.status(200).json({ message: 'Logged out successfully' });
     }catch(error){

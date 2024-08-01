@@ -2,11 +2,11 @@ const jwt = require('jsonwebtoken');
 const User=require("../models/userModel")
 const cookieParser = require('cookie-parser');
 
-const authenticateToken = (req, res, next) => {
-    const token=req.cookies.token;
+const authenticateToken = async(req, res, next) => {
+    const token=await req.cookies.token;
     if (!token) return res.status(401).json({ error: 401 });
 
-    jwt.verify(token, process.env.SECRET_KEY, async(err, user) => {
+    await jwt.verify(token, process.env.SECRET_KEY, async(err, user) => {
         if (err){ 
             return res.status(401).json({ error: "Unauthorised" });}
 

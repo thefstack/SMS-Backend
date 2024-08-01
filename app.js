@@ -12,7 +12,7 @@ app.use(cookieParser());
 
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({
-  origin:'http://localhost:3000',
+  origin:'https://rsmeds.netlify.app',
   credentials:true
 }));
 
