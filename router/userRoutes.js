@@ -13,6 +13,7 @@ const {authenticateToken,authorizeAdmin}=require("../middleware/authToken");
 router.post("/login",async(req,res)=>{
     try{
         const {username, password}=req.body;
+        console.log(req.body)
         if(username==="" || !password===""){
             return res.status(400).json({ error: "Username and password are required" });
         }
@@ -32,7 +33,7 @@ router.post("/login",async(req,res)=>{
             role:user.role
         }
         const token=jwt.sign(payload ,process.env.SECRET_KEY,{expiresIn:'120m'});
-
+        console.log(token);
         user.token=token;
         await user.save();
 
